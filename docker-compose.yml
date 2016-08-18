@@ -1,0 +1,15 @@
+mongo:
+  build: .
+  ports:
+    - "27017:27017"
+#  volumes:
+#    - ./js:/js
+#    - ./data/db:/data/db
+  restart: "always"
+  log_driver: "json-file"
+  log_opt:
+    max-size: "50m"
+    max-file: "100"
+  env_file: .dockerenv
+  dns:
+    - 172.17.0.1
