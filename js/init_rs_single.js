@@ -1,3 +1,5 @@
+//For tests only
+//
 var replicaSetConfig =
 {
     _id: "rs0",

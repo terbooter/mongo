@@ -6,12 +6,10 @@ RUN apt-get install -y mongodb-org=3.2.7 mongodb-org-server=3.2.7 mongodb-org-sh
 RUN apt-get install -y pwgen
 ENV TERM=xterm
 VOLUME /data/db
-
 COPY ./js /js
 ADD ./mongod.conf /etc/mongod.conf
-#ADD ./key /keyfiles/key
 ADD ./run.sh /run.sh
-RUN chmod +x /run.sh
-#RUN chmod a-rw /keyfiles/key
+ADD ./add_root_user.sh /add_root_user.sh
+RUN chmod +x /run.sh && chmod +x /add_root_user.sh
 
 CMD /run.sh
