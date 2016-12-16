@@ -10,6 +10,13 @@ https://docs.mongodb.com/manual/tutorial/deploy-replica-set-with-keyfile-access-
 * Делаем `git clone` этого репозитория
 * Переименовываем .dockerenv.EXAMPLE в .dockerenv
 * Генерим рандомный ключ и пишем его в переменную окружения MONGO_KEY
+Для этого используем команду
+```
+openssl rand -base64 40
+```
+Длина ключа должна быть от 6 до 1024 символов
+[подробнее в доке](https://docs.mongodb.com/v3.2/tutorial/enforce-keyfile-access-control-in-existing-replica-set/#create-a-keyfile)
+Скрипт запуска автоматически создаст keyfile и запишет туда значение переменной окружения `MONGO_KEY` 
 * Задаем переменную среды SERVICE_NAME которую понимает регистратор для каждой ноды свой (mongo0, mongo1, mongo2)
 mongo0 запускается с приоритетом 2, остальные с приоритетом 1
 * Запускаем как обычно `docker-compose up`
@@ -40,6 +47,7 @@ bye
 ```
 Этот скрипт создает еще один скрипт для запуска mongo shell под root юзером 
 * Для того чтобы войти под рутом запускаем скрипт `/mongo.sh`
+* Удобный десктопный клиент для монги - MongoChef
 
 
 #TODO
