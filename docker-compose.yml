@@ -1,6 +1,6 @@
 mongo:
-  image: terbooter/mongo
-#  build: .
+#  image: terbooter/mongo
+  build: .
   ports:
     - "27017:27017"
   volumes:
@@ -10,6 +10,4 @@ mongo:
   log_opt:
     max-size: "50m"
     max-file: "100"
-  env_file: .dockerenv
-  dns:
-    - 172.17.0.1
+  env_file: .env
