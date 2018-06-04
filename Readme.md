@@ -1,24 +1,24 @@
 Deploy mongo replicaset of 3 nodes
 
-Данная инструкция создана по мотивам официальной доки
+This instruction based on official docs
 https://docs.mongodb.com/manual/tutorial/deploy-replica-set-with-keyfile-access-control/#deploy-repl-set-with-auth
 
 #Step by step
-* На трех машинах должен быть установлен консул с регистратором из этого репозитория
- https://github.com/terbooter/consul
-* Заходим по ssh на первую машину
-* Делаем `git clone` этого репозитория
-* Переименовываем .dockerenv.EXAMPLE в .dockerenv
-* Генерим рандомный ключ и пишем его в переменную окружения MONGO_KEY
-Для этого используем команду
+* 3 hosts should be with docker (Lets call this nodes mongo0, mongo1, mongo2)
+* Login via SSH to first host
+* Make `git clone` of this repo
+* Rename .env.EXAMPLE into .env
+* Generate random key using command
 ```
 openssl rand -base64 40
 ```
-Длина ключа должна быть от 6 до 1024 символов
-[подробнее в доке](https://docs.mongodb.com/v3.2/tutorial/enforce-keyfile-access-control-in-existing-replica-set/#create-a-keyfile)
-Скрипт запуска автоматически создаст keyfile и запишет туда значение переменной окружения `MONGO_KEY` 
-* Задаем переменную среды SERVICE_NAME которую понимает регистратор для каждой ноды свой (mongo0, mongo1, mongo2)
-mongo0 запускается с приоритетом 2, остальные с приоритетом 1
+* Copy that key to MONGO_KEY
+
+Key length must be between 6 and 1024 characters long and must be the same for all members of the replica set.
+[more about key in docs](https://docs.mongodb.com/v3.6/tutorial/enforce-keyfile-access-control-in-existing-replica-set/#create-a-keyfile)
+boot script automatically will create keyfile and write `MONGO_KEY` value into it 
+
+* Run mongo on mongo0 with priority 2, other with priority 1
 * Запускаем как обычно `docker-compose up`
 * На втором сервере повторяем все тоже самое, но ключ не генерим а копируем с первого сервера, SERVICE_NAME задаем mongo1 
 * Повторяем на третьем сервере то же что и на втором, SERVICE_NAME задаем mongo2
