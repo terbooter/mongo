@@ -34,8 +34,7 @@ docker exec -it mongo_mongo_1 bash
 ```
 mongo < /js/init_rs.js
 ```
-* Проверяем, что репликасет инициализовалась и мы в PRIMARY
-Для этого запускаем монго шелл
+* Check rs initialised and we are in PRIMARY
 ```
 root@cacc5b6cf03c:/# mongo
 MongoDB shell version: 3.2.7
@@ -43,8 +42,8 @@ connecting to: test
 rs0:PRIMARY> exit
 bye
 ```
-Если видим строку `rs0:PRIMARY` то данный сервер -  primary
-* Запускаем bash скрипт создающий root юзера
+If there is a string `rs0:PRIMARY` that means server is primary
+* Run bash script to create root user
 ```
 /add_root_user.sh
 ```
