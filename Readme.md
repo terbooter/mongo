@@ -1,10 +1,11 @@
-Deploy mongo replicaset of 3 nodes
+**Deploy mongo replicaset on 3 nodes**
 
 This instruction based on official docs
 https://docs.mongodb.com/manual/tutorial/deploy-replica-set-with-keyfile-access-control/#deploy-repl-set-with-auth
 
-#Step by step
+# Up 3 hosts with mongo
 * 3 hosts should be with docker (Lets call this nodes mongo0, mongo1, mongo2)
+## Prepare first (mongo0) host
 * Login via SSH to first host
 * Make `git clone` of this repo
 * Rename .env.EXAMPLE into .env
@@ -18,16 +19,18 @@ Key length must be between 6 and 1024 characters long and must be the same for a
 [more about key in docs](https://docs.mongodb.com/v3.6/tutorial/enforce-keyfile-access-control-in-existing-replica-set/#create-a-keyfile)
 boot script automatically will create keyfile and write `MONGO_KEY` value into it 
 
-* Run mongo on mongo0 with priority 2, other with priority 1
-* Запускаем как обычно `docker-compose up`
-* На втором сервере повторяем все тоже самое, но ключ не генерим а копируем с первого сервера, SERVICE_NAME задаем mongo1 
-* Повторяем на третьем сервере то же что и на втором, SERVICE_NAME задаем mongo2
-В конце этого шага у нас есть три экземпляра монг запущенных на трех разных машинах.
-* Входим внутрь контейнера на хосте с mongo0
+## Prepare second and third hosts (mongo1 and mongo2)
+* Same steps as for mongo0 for mongo1 and mongo2
+* But `MONGO_KEY` copy from mongo0 (not generate new) 
+
+Now we have 3 mongo servers running on 3 hosts.
+
+# Set replica
+* Enter into mongo container on host mongo0
 ```
 docker exec -it mongo_mongo_1 bash
 ```
-* Запускаем mongo shell скрипт инициализирующий реплику (см доку)
+* Run mongo shel script to initialise replica
 ```
 mongo < /js/init_rs.js
 ```
